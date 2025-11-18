@@ -37,9 +37,14 @@ public class PlayerController : MonoBehaviour
 
     //Crouch
     //------------------------------------------------
-    private float _standHeight = 1.2f;
-    private float _crouchHeight = 0.6f;
-    private float _crouchSpeed = 2;
+    /*private float _standHeight = 1.2f;
+    private float _crouchHeight = 0.6f;*/
+    private float _crouchSpeed = 1;
+    //se le puede meter numero si vemos que se controla mejor, de momento asignamos en el start
+    private float _cameraStandY;
+    private float _cameraCrouchY = 2f;
+
+    public bool _isCrouched;
 
     void Awake()
     {
@@ -53,12 +58,23 @@ public class PlayerController : MonoBehaviour
         _lookAction = InputSystem.actions["Look"];
     }
 
+    void Start()
+    {
+        _cameraStandY = _cameraHolder.localPosition.y;
+        _isCrouched = false;
+    }
+
     void Update()
     {
         _moveValue = _moveAction.ReadValue<Vector2>();
         _lookValue = _lookAction.ReadValue<Vector2>();
 
         Movement();
+        
+        if(_crouchAction.WasPressedThisFrame())
+        {
+            ToggleCrouch();
+        } 
     }
 
     void Movement()
@@ -85,10 +101,49 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void Gravity()
+    {
+        
+    }
+    
+    
     void Crouch()
     {
+        //----agacharse----//
+        _isCrouched = true;
         //Altura nueva
-        //Interpolación cambio de alturas
-        
+        //Interpolación cambio de alturas será la velocidad de agacharse por Time.deltaTime
+        float newHeight = Mathf.Lerp(_cameraStandY, _cameraCrouchY, _crouchSpeed * Time.deltaTime);
+
+        //modificamos el transform para llegar a la nueva altura
+        _cameraHolder.localPosition = new Vector3 (_cameraHolder.localPosition.x, -newHeight, _cameraHolder.localPosition.z);
+
+        /*if(_crouchAction.WasPressedThisFrame() && _isCrouched)
+        {
+            _cameraHolder.localPosition = new Vector3 (0, _cameraStandY, 0);
+        }*/
+    }
+
+    /*
+    void Stand()
+    {
+        _isCrouched = false;
+        _cameraHolder.localPosition = new Vector3 (0, _cameraStandY, 0);
+    }
+    */
+
+    void ToggleCrouch()
+    {
+        if(!_isCrouched)
+        {
+            float newHeight = Mathf.Lerp(_cameraStandY, _cameraCrouchY, _crouchSpeed * Time.deltaTime);
+            _cameraHolder.localPosition = new Vector3 (_cameraHolder.localPosition.x, -newHeight, _cameraHolder.localPosition.z);
+            _isCrouched = true;
+        }
+        else if(_isCrouched)
+        {
+            _cameraHolder.localPosition = new Vector3 (0, _cameraStandY, 0);
+            _isCrouched = false;
+        }
     }
 }
