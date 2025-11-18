@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour
     /*private float _standHeight = 1.2f;
     private float _crouchHeight = 0.6f;*/
     private float _crouchSpeed = 1;
+    
     //se le puede meter numero si vemos que se controla mejor, de momento asignamos en el start
     private float _cameraStandY;
     private float _cameraCrouchY = 2f;
@@ -73,8 +76,12 @@ public class PlayerController : MonoBehaviour
         
         if(_crouchAction.WasPressedThisFrame())
         {
+            //con esta línea evitamos tener que cambiar la booleana cada vez que agachamos y levantamos
+            _isCrouched = !_isCrouched;
             ToggleCrouch();
-        } 
+
+            
+        }
     }
 
     void Movement()
@@ -101,49 +108,30 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Gravity()
-    {
-        
-    }
+    void Gravity(){}
     
-    
-    void Crouch()
-    {
-        //----agacharse----//
-        _isCrouched = true;
-        //Altura nueva
-        //Interpolación cambio de alturas será la velocidad de agacharse por Time.deltaTime
-        float newHeight = Mathf.Lerp(_cameraStandY, _cameraCrouchY, _crouchSpeed * Time.deltaTime);
-
-        //modificamos el transform para llegar a la nueva altura
-        _cameraHolder.localPosition = new Vector3 (_cameraHolder.localPosition.x, -newHeight, _cameraHolder.localPosition.z);
-
-        /*if(_crouchAction.WasPressedThisFrame() && _isCrouched)
-        {
-            _cameraHolder.localPosition = new Vector3 (0, _cameraStandY, 0);
-        }*/
-    }
-
-    /*
-    void Stand()
-    {
-        _isCrouched = false;
-        _cameraHolder.localPosition = new Vector3 (0, _cameraStandY, 0);
-    }
-    */
-
     void ToggleCrouch()
     {
         if(!_isCrouched)
         {
             float newHeight = Mathf.Lerp(_cameraStandY, _cameraCrouchY, _crouchSpeed * Time.deltaTime);
-            _cameraHolder.localPosition = new Vector3 (_cameraHolder.localPosition.x, -newHeight, _cameraHolder.localPosition.z);
-            _isCrouched = true;
+            _cameraHolder.localPosition = new Vector3 (0, -newHeight, 0);
+            //_isCrouched = true;
         }
         else if(_isCrouched)
         {
             _cameraHolder.localPosition = new Vector3 (0, _cameraStandY, 0);
-            _isCrouched = false;
+            //_isCrouched = false;
         }
     }
+
+
+    /*IEnumerator SmoothCrouch()
+    {
+        while()
+        {
+            
+        }
+        yield return null;
+    }*/
 }
