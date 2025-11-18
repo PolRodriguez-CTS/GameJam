@@ -67,6 +67,9 @@ public class PlayerController : MonoBehaviour
     {
         _targetY = _cameraStandY;
         _cameraHolder.localPosition = new Vector3(0, _cameraStandY, 0);
+
+        //Queda intentar que al iniciar la cámara no mire hacia abajo
+        //_xRotation = _cameraHolder.localRotation.eulerAngles.x;
     }
 
     void Update()
