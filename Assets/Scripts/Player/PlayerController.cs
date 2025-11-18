@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 
     //Movement
     //------------------------------------------------
-    public float playerSpeed = 5f;
+    private float playerSpeed = 5f;
     //------------------------------------------------
 
     //Camera
@@ -41,13 +41,15 @@ public class PlayerController : MonoBehaviour
     //------------------------------------------------
     /*private float _standHeight = 1.2f;
     private float _crouchHeight = 0.6f;*/
-    private float _crouchSpeed = 1;
+    [SerializeField] private float _crouchSpeed = 5f;
     
     //se le puede meter numero si vemos que se controla mejor, de momento asignamos en el start
-    private float _cameraStandY;
-    private float _cameraCrouchY = 2f;
+    [SerializeField] private float _cameraStandY = 1f;
+    [SerializeField] private float _cameraCrouchY = 0.2f;
 
-    public bool _isCrouched;
+    public bool _isCrouched = false;
+    private float _targetY;
+
 
     void Awake()
     {
@@ -63,8 +65,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        _cameraStandY = _cameraHolder.localPosition.y;
-        _isCrouched = false;
+        _targetY = _cameraStandY;
+        _cameraHolder.localPosition = new Vector3(0, _cameraStandY, 0);
     }
 
     void Update()
@@ -73,15 +75,26 @@ public class PlayerController : MonoBehaviour
         _lookValue = _lookAction.ReadValue<Vector2>();
 
         Movement();
-        
-        if(_crouchAction.WasPressedThisFrame())
+
+        if (_crouchAction.WasPressedThisFrame())
         {
             //con esta línea evitamos tener que cambiar la booleana cada vez que agachamos y levantamos
             _isCrouched = !_isCrouched;
-            ToggleCrouch();
+            //ToggleCrouch();
 
-            
+            if (_isCrouched)
+            {
+                _targetY = _cameraCrouchY;
+            }
+
+            else
+            {
+                _targetY = _cameraStandY;
+            }
         }
+        float newY = Mathf.MoveTowards(_cameraHolder.localPosition.y, _targetY, _crouchSpeed * Time.deltaTime);
+        _cameraHolder.localPosition = new Vector3(0, newY, 0);
+
     }
 
     void Movement()
@@ -112,26 +125,23 @@ public class PlayerController : MonoBehaviour
     
     void ToggleCrouch()
     {
-        if(!_isCrouched)
+        //StartCoroutine(SmoothCrouch());
+        if (!_isCrouched)
         {
             float newHeight = Mathf.Lerp(_cameraStandY, _cameraCrouchY, _crouchSpeed * Time.deltaTime);
-            _cameraHolder.localPosition = new Vector3 (0, -newHeight, 0);
-            //_isCrouched = true;
+            _cameraHolder.localPosition = new Vector3(0, -newHeight, 0);
         }
-        else if(_isCrouched)
+        else if (_isCrouched)
         {
-            _cameraHolder.localPosition = new Vector3 (0, _cameraStandY, 0);
-            //_isCrouched = false;
+            _cameraHolder.localPosition = new Vector3(0, _cameraStandY, 0);
         }
     }
 
-
-    /*IEnumerator SmoothCrouch()
+    /*
+    IEnumerator SmoothCrouch()
     {
-        while()
-        {
-            
-        }
+        while(Mathf.Abs(_cameraStandY - _cameraCrouchY) != 0) {}
         yield return null;
-    }*/
+    }
+    */
 }
