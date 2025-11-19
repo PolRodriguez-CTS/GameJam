@@ -11,9 +11,11 @@ public class SoundManager : MonoBehaviour
     public AudioClip _stepsSFX;
     public AudioClip _buttonsSFX;
     public AudioClip _keySFX;
+    public AudioClip _dropKeySFX;
     public AudioClip _doorSFX;
     public AudioClip _dropObjectSFX;
     public AudioClip _lockSFX;
+    public AudioClip _canvasNoteSFX;
 
     void Awake()
     {
@@ -37,6 +39,11 @@ public class SoundManager : MonoBehaviour
 
     public void PlayBGM(AudioClip _clip)
     {
+        if(_bgmAudioSource.clip == _clip && _bgmAudioSource.isPlaying)
+        {
+            return;
+        }
+        
         _bgmAudioSource.Play();
     }
 

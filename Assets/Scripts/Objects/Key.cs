@@ -12,7 +12,7 @@ public class Key : MonoBehaviour, IGrabeable
 
     public void Drop()
     {
-        SoundManager.Instance.PlaySFX(SoundManager.Instance._keySFX);
+        SoundManager.Instance.PlaySFX(SoundManager.Instance._dropKeySFX);
         GameManager.Instance.hasKey = false;
     }
 }

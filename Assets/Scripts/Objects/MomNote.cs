@@ -12,6 +12,7 @@ public class Note : MonoBehaviour, IInteractable
             isActive = !isActive;
             if (isActive && GameManager.Instance.isOpened == true)
             {
+                SoundManager.Instance.PlaySFX(SoundManager.Instance._canvasNoteSFX);
                 _inputActionAsset.FindActionMap("Player").Disable();
                 _inputActionAsset.FindActionMap("UI").Enable();
 
@@ -22,6 +23,7 @@ public class Note : MonoBehaviour, IInteractable
             }
             else if (!isActive && GameManager.Instance.isOpened == true)
             {
+                SoundManager.Instance.PlaySFX(SoundManager.Instance._canvasNoteSFX);
                 _inputActionAsset.FindActionMap("UI").Disable();
                 _inputActionAsset.FindActionMap("Player").Enable();
 

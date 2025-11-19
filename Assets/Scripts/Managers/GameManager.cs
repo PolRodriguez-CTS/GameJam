@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance {get ; private set; }
@@ -7,8 +8,12 @@ public class GameManager : MonoBehaviour
     public bool hasKey = false;
     public bool isOpened = false;
     
-    public GameObject toys;
     public bool youSeeNote;
+
+    public List<GameObject> toys;
+
+    public int toyToTrash = 0;
+    public bool allTrashed = false;
     
     void Awake()
     {
@@ -35,6 +40,21 @@ public class GameManager : MonoBehaviour
 
     public void CanToy()
     {
-        toys.layer = 6;
+        foreach (GameObject obj in toys)
+        {
+            if (obj != null)
+            {
+                obj.layer = 6;
+                obj.tag = "Toy";
+            }
+        }
+    }
+
+    public void ToyTrashed()
+    {
+        if(toyToTrash == 5)
+        {
+            allTrashed = true;
+        }
     }
 }
