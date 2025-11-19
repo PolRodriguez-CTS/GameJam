@@ -28,8 +28,11 @@ public class SoundManager : MonoBehaviour
         {
             Instance = this;
         }
-
+        
         DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(_sfxAudioSource);
+        DontDestroyOnLoad(_bgmAudioSource);
+        DontDestroyOnLoad(_stepsAudioSource);
     }
 
     void Start()

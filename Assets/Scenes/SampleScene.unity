@@ -340,8 +340,9 @@ GameObject:
   - component: {fileID: 162354899}
   - component: {fileID: 162354898}
   - component: {fileID: 162354897}
+  - component: {fileID: 162354903}
   m_Layer: 0
-  m_Name: Toy (2)
+  m_Name: ToyTurbado
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -481,6 +482,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &162354903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162354896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b16c0d994790e724783700cb407cd30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &163023455
 GameObject:
   m_ObjectHideFlags: 0
@@ -4115,8 +4128,9 @@ GameObject:
   - component: {fileID: 1823014091}
   - component: {fileID: 1823014090}
   - component: {fileID: 1823014089}
+  - component: {fileID: 1823014095}
   m_Layer: 0
-  m_Name: Toy (1)
+  m_Name: ToyTetitas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4256,6 +4270,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1823014095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823014088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b16c0d994790e724783700cb407cd30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1833509476
 GameObject:
   m_ObjectHideFlags: 0

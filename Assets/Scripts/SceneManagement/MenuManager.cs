@@ -22,10 +22,10 @@ public class MenuManager : MonoBehaviour
     public void ChangeScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
-        ChangeScene(sceneName);
     }
 
-    public void ChangeSceneBGM(Scene scene)
+
+    public void ChangeBGM(Scene scene)
     {
         if(scene.name == "MainMenu")
         {
