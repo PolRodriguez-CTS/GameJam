@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 
     //Inputs
     //------------------------------------------------
+    //[SerializeField] private InputActionAsset _inputAsset;
     private Vector2 _moveValue;
     private InputAction _moveAction;
 
@@ -67,12 +68,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public GameObject key;
 
 
+
     void Awake()
     {
+        /*
+        input.currentActionMap.Disable();
+        input.SwitchCurrentActionMap("UI");
+        input.currentActionMap.Enable();
+        */
+
         //Components
         _characterController = GetComponent<CharacterController>();
 
         //Inputs
+        //_moveAction = _inputAsset.FindActionMap("Player").actions["Move"];
+
         _moveAction = InputSystem.actions["Move"];
         _crouchAction = InputSystem.actions["Crouch"];
         _grabAction = InputSystem.actions["Grab"];
