@@ -20,6 +20,7 @@ public class SisterNote : MonoBehaviour, IGrabeable, IInteractable
         UIManager.Instance.sisterNote.SetActive(true);
         _inputActionAsset.FindActionMap("Player").Disable();
         _inputActionAsset.FindActionMap("UI").Enable();
+        GameManager.Instance.youSeeSisterNote = true;
         }
     }
 
@@ -49,8 +50,10 @@ public class SisterNote : MonoBehaviour, IGrabeable, IInteractable
             if(canva == true)
             {
                 SoundManager.Instance.PlaySFX(SoundManager.Instance._canvasNoteSFX);
-
+                
                 UIManager.Instance.sisterNote.SetActive(false);
+                UIManager.Instance.momNote.SetActive(false);
+                UIManager.Instance.calendar.SetActive(false);
                 _inputActionAsset.FindActionMap("Player").Enable();
                 _inputActionAsset.FindActionMap("UI").Disable();
                 canva = false;
@@ -59,6 +62,8 @@ public class SisterNote : MonoBehaviour, IGrabeable, IInteractable
             {
                 SoundManager.Instance.PlaySFX(SoundManager.Instance._canvasNoteSFX);
 
+                UIManager.Instance.momNote.SetActive(false);
+                UIManager.Instance.calendar.SetActive(false);
                 UIManager.Instance.sisterNote.SetActive(true);
                 _inputActionAsset.FindActionMap("UI").Enable();
                 _inputActionAsset.FindActionMap("Player").Disable();

@@ -10,10 +10,11 @@ public class GameManager : MonoBehaviour
     
     public bool youSeeNote;
 
+    public bool youSeeSisterNote = false;
+
     public List<GameObject> toys;
 
-    public int toyToTrash = 0;
-    public bool allTrashed = false;
+
     
     void Awake()
     {
@@ -44,17 +45,11 @@ public class GameManager : MonoBehaviour
         {
             if (obj != null)
             {
+                Toys _toysScrits = obj.gameObject.GetComponent<Toys>();
+                _toysScrits.enabled = true;
                 obj.layer = 6;
                 obj.tag = "Toy";
             }
-        }
-    }
-
-    public void ToyTrashed()
-    {
-        if(toyToTrash == 5)
-        {
-            allTrashed = true;
         }
     }
 }

@@ -17,6 +17,8 @@ public class Note : MonoBehaviour, IInteractable
                 _inputActionAsset.FindActionMap("UI").Enable();
 
                 _emissionScript.rangeEmission = false;
+                UIManager.Instance.calendar.SetActive(false);
+                UIManager.Instance.sisterNote.SetActive(false);
                 UIManager.Instance.momNote.SetActive(true);
                 GameManager.Instance.youSeeNote = true;
                 GameManager.Instance.CanToy();
@@ -28,6 +30,8 @@ public class Note : MonoBehaviour, IInteractable
                 _inputActionAsset.FindActionMap("Player").Enable();
 
                 _emissionScript.rangeEmission = true;
+                UIManager.Instance.calendar.SetActive(false);
+                UIManager.Instance.sisterNote.SetActive(false);
                 UIManager.Instance.momNote.SetActive(false);
             }
         }

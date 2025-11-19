@@ -19,20 +19,26 @@ public class MenuManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    void Start()
+    {
+        SoundManager.Instance.PlayBGM(SoundManager.Instance._staticBgm);
+    }
+
     public void ChangeScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+        ChangeBGM(sceneName);
     }
 
 
-    public void ChangeBGM(Scene scene)
+    public void ChangeBGM(string sceneName)
     {
-        if(scene.name == "MainMenu")
+        if(sceneName == "MainMenu")
         {
             Debug.Log("MenuPrincipal");
             SoundManager.Instance.PlayBGM(SoundManager.Instance._staticBgm);
         }
-        if(scene.name == "SampleScene")
+        if(sceneName == "Testeo")
         {
             Debug.Log("Escena1");
             SoundManager.Instance.PlayBGM(SoundManager.Instance._bgmClip);

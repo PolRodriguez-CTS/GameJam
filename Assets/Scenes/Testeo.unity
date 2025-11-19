@@ -342,7 +342,7 @@ GameObject:
   - component: {fileID: 162354897}
   - component: {fileID: 162354903}
   m_Layer: 0
-  m_Name: ToyTurbado
+  m_Name: Toy_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -489,9 +489,9 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 162354896}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b16c0d994790e724783700cb407cd30b, type: 3}
+  m_Script: {fileID: 11500000, guid: 8907f344866c8594bae8c511924e3627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &163023455
@@ -558,7 +558,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ae84f967972ad2645bfe01b81c3ccd3e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1024,7 +1024,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -2830,7 +2830,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -3421,6 +3421,7 @@ GameObject:
   - component: {fileID: 1416667851}
   - component: {fileID: 1416667850}
   - component: {fileID: 1416667849}
+  - component: {fileID: 1416667856}
   m_Layer: 0
   m_Name: Toy
   m_TagString: Untagged
@@ -3576,6 +3577,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1416667856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416667848}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8907f344866c8594bae8c511924e3627, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1499187940
 GameObject:
   m_ObjectHideFlags: 0
@@ -4130,7 +4143,7 @@ GameObject:
   - component: {fileID: 1823014089}
   - component: {fileID: 1823014095}
   m_Layer: 0
-  m_Name: ToyTetitas
+  m_Name: Toy_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4277,9 +4290,9 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823014088}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b16c0d994790e724783700cb407cd30b, type: 3}
+  m_Script: {fileID: 11500000, guid: 8907f344866c8594bae8c511924e3627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1833509476
