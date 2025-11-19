@@ -3,6 +3,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance {get ; private set; }
+
+    //Llave
+    public bool hasKey = false;
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -18,13 +21,5 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+    
 }

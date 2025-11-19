@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
 
     private InputAction _crouchAction;
 
+    private InputAction _grabAction;
     private InputAction _interactAction;
     //------------------------------------------------
 
@@ -72,6 +73,7 @@ public class PlayerController : MonoBehaviour
         //Inputs
         _moveAction = InputSystem.actions["Move"];
         _crouchAction = InputSystem.actions["Crouch"];
+        _grabAction = InputSystem.actions["Grab"];
         _interactAction = InputSystem.actions["Interact"];
         _lookAction = InputSystem.actions["Look"];
     }
@@ -111,15 +113,13 @@ public class PlayerController : MonoBehaviour
         float newY = Mathf.MoveTowards(_cameraHolder.localPosition.y, _targetY, _crouchSpeed * Time.deltaTime);
         _cameraHolder.localPosition = new Vector3(0, newY, 0);
 
-        if(_interactAction.WasPressedThisFrame())
+        if(_grabAction.WasPressedThisFrame())
         {
             GrabObject();
         }
-        /*if(_interactAction.WasPerformedThisFrame() && _grabbedObject != null)
-        {
-            Throw();
-        }*/
 
+        if(_interactAction.WasPressedThisFrame())
+        {}
     }
 
     void Movement()
@@ -174,6 +174,7 @@ public class PlayerController : MonoBehaviour
 
                 if(grabeable != null)
                 {
+                    grabeable.Grab();
                     _grabbedObject = item.transform;
                     _grabbedObject.SetParent(_hands);
                     _grabbedObject.position = _hands.position;
@@ -185,26 +186,27 @@ public class PlayerController : MonoBehaviour
 
         else
         {
+            IGrabeable grabeable = _grabbedObject.gameObject.GetComponent<IGrabeable>();
+            grabeable.Drop();
             _grabbedObject.SetParent(null);
             _grabbedObject.GetComponent<Rigidbody>().isKinematic = false;
             _grabbedObject = null;
         }
     }
 
-    /*void Throw()
+    private void Interact()
     {
-        if (_grabbedObject == null)
+        Collider[] objectsToInteract = Physics.OverlapBox(_grabSensor.position, _grabSensorSize);
+
+        foreach(Collider item in objectsToInteract)
         {
-            return;
+            //Iinteractables interactable = item.GetComponent<Iinteractable>();
+            //if(interactable != null)
+            /*{
+                interactable.Instace();
+            }*/
         }
-
-        Rigidbody _grabbedBody = _grabbedObject.GetComponent<Rigidbody>();
-
-        _grabbedObject.SetParent(null);
-        _grabbedBody.isKinematic = false;
-        _grabbedBody.AddForce(_mainCamera.transform.forward * _throwForce, ForceMode.Impulse);
-        _grabbedObject = null;
-    }*/
+    }
 
     void OnDrawGizmos()
     {
