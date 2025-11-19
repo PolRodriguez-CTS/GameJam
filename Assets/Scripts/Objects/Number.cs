@@ -9,7 +9,6 @@ public class Number : MonoBehaviour, IInteractable
     public void Interact()
     {
         ColorEmission _emissionScript = GetComponent<ColorEmission>();
-        PlayerController _playerScript = FindFirstObjectByType<PlayerController>();
         isActive = !isActive;
         if(isActive)
         {

@@ -13,16 +13,11 @@ public class PlayerController : MonoBehaviour
 
     //Inputs
     //------------------------------------------------
-    //[SerializeField] private InputActionAsset _inputAsset;
     private Vector2 _moveValue;
     private InputAction _moveAction;
-
-    //private InputAction _jumpAction;
     public Vector2 _lookValue;
     private InputAction _lookAction;
-
     private InputAction _crouchAction;
-
     private InputAction _grabAction;
     private InputAction _interactAction;
     //------------------------------------------------
@@ -42,47 +37,39 @@ public class PlayerController : MonoBehaviour
 
     //Crouch
     //------------------------------------------------
-    /*private float _standHeight = 1.2f;
-    private float _crouchHeight = 0.6f;*/
     [SerializeField] private float _crouchSpeed = 5f;
-    
-    //se le puede meter numero si vemos que se controla mejor, de momento asignamos en el start
-    [SerializeField] private float _cameraStandY = 1f;
+    [SerializeField] private float _cameraStandY = 0.9f;
     [SerializeField] private float _cameraCrouchY = 0.2f;
 
     public bool _isCrouched = false;
     private float _targetY;
 
     //Grab
-    //Tamaño del sensor
     [SerializeField] private Vector3 _grabSensorSize;
     [SerializeField] private Transform _grabSensor;
-
-    //Posición a la que se va a llevar al objeto grabeado
     [SerializeField] private Transform _hands;
     [SerializeField] private Vector3 _handsSize;
     //Transfomr del objeto grabeado
     public Transform _grabbedObject;
-    //private float _throwForce = 2;
-
     [SerializeField] public GameObject key;
+    
+    //Gravedad
+    [SerializeField] private float _gravity = -9.81f;
+    [SerializeField] private Vector3 _playerGravity;
+
+    //Pasos
+    [SerializeField] private float stepInterval = 0.4f;
+    private float stepTimer = 0f;
+
 
 
 
     void Awake()
     {
-        /*
-        input.currentActionMap.Disable();
-        input.SwitchCurrentActionMap("UI");
-        input.currentActionMap.Enable();
-        */
-
         //Components
         _characterController = GetComponent<CharacterController>();
 
         //Inputs
-        //_moveAction = _inputAsset.FindActionMap("Player").actions["Move"];
-
         _moveAction = InputSystem.actions["Move"];
         _crouchAction = InputSystem.actions["Crouch"];
         _grabAction = InputSystem.actions["Grab"];
@@ -108,9 +95,7 @@ public class PlayerController : MonoBehaviour
 
         if (_crouchAction.WasPressedThisFrame())
         {
-            //con esta línea evitamos tener que cambiar la booleana cada vez que agachamos y levantamos
             _isCrouched = !_isCrouched;
-            //ToggleCrouch();
 
             if (_isCrouched)
             {
@@ -122,6 +107,7 @@ public class PlayerController : MonoBehaviour
                 _targetY = _cameraStandY;
             }
         }
+
         float newY = Mathf.MoveTowards(_cameraHolder.localPosition.y, _targetY, _crouchSpeed * Time.deltaTime);
         _cameraHolder.localPosition = new Vector3(0, newY, 0);
 
@@ -132,9 +118,10 @@ public class PlayerController : MonoBehaviour
 
         if(_interactAction.WasPressedThisFrame())
         {
-            Debug.Log("Interact");
             Interact();
         }
+
+        CharacterGravity();
     }
 
     void Movement()
@@ -155,17 +142,27 @@ public class PlayerController : MonoBehaviour
 
         if(direction != Vector3.zero)
         {
+            
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _mainCamera.eulerAngles.y;
             Vector3 moveDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
             _characterController.Move(moveDirection * playerSpeed * Time.deltaTime);
+            
+            stepTimer -= Time.deltaTime;
+            
+            if(stepTimer <= 0f)
+            {
+                SoundManager.Instance.StepSFX(SoundManager.Instance._stepsSFX);
+                stepTimer = stepInterval;
+            }
+        }
+        else
+        {
+            stepTimer = 0;
         }
     }
-
-    void Gravity(){}
     
-    void ToggleCrouch()
+    /*void ToggleCrouch()
     {
-        //StartCoroutine(SmoothCrouch());
         if (!_isCrouched)
         {
             float newHeight = Mathf.Lerp(_cameraStandY, _cameraCrouchY, _crouchSpeed * Time.deltaTime);
@@ -175,7 +172,7 @@ public class PlayerController : MonoBehaviour
         {
             _cameraHolder.localPosition = new Vector3(0, _cameraStandY, 0);
         }
-    }
+    }*/
 
     public void GrabObject()
     {
@@ -188,7 +185,7 @@ public class PlayerController : MonoBehaviour
                 IGrabeable grabeable = item.GetComponent<IGrabeable>();
                 ColorEmission _emissionScript = item.GetComponent<ColorEmission>();
 
-                if(grabeable != null)
+                if(grabeable != null && item.gameObject.layer == 6)
                 {
                     _emissionScript.isColored = true;
                     grabeable.Grab();
@@ -203,6 +200,7 @@ public class PlayerController : MonoBehaviour
 
         else
         {
+            //SoundManager.Instance.PlaySFX(SoundManager.Instance._dropObjectSFX);
             ColorEmission _emissionScript = _grabbedObject.gameObject.GetComponent<ColorEmission>();
             _emissionScript.isColored = false;
 
@@ -237,5 +235,11 @@ public class PlayerController : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(_grabSensor.position, _grabSensorSize);
+    }
+
+    void CharacterGravity()
+    {
+        _playerGravity.y = _gravity;
+        _characterController.Move(_playerGravity * Time.deltaTime);
     }
 }

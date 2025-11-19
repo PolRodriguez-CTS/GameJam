@@ -5,8 +5,10 @@ public class GameManager : MonoBehaviour
 
     //Llave
     public bool hasKey = false;
+    public bool isOpened = false;
     
-
+    public GameObject toys;
+    public bool youSeeNote;
     
     void Awake()
     {
@@ -24,14 +26,15 @@ public class GameManager : MonoBehaviour
     }
     public void Open()
     {
-        Debug.Log("Abierto");
+        SoundManager.Instance.PlaySFX(SoundManager.Instance._lockSFX);
+        isOpened = true;
         PlayerController _playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         _playerScript.GrabObject();
         Destroy(_playerScript.key);
     }
 
-    public void DestroyToys()
+    public void CanToy()
     {
-        
+        toys.layer = 6;
     }
 }
