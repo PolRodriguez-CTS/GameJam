@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -50,6 +51,17 @@ public class PlayerController : MonoBehaviour
     public bool _isCrouched = false;
     private float _targetY;
 
+    //Grab
+    //Tamaño del sensor
+    [SerializeField] private Vector3 _grabSensorSize;
+    [SerializeField] private Transform _grabSensor;
+
+    //Posición a la que se va a llevar al objeto grabeado
+    [SerializeField] private Transform _hands;
+    [SerializeField] private Vector3 _handsSize;
+    //Transfomr del objeto grabeado
+    private Transform _grabbedObject;
+
 
     void Awake()
     {
@@ -98,6 +110,11 @@ public class PlayerController : MonoBehaviour
         float newY = Mathf.MoveTowards(_cameraHolder.localPosition.y, _targetY, _crouchSpeed * Time.deltaTime);
         _cameraHolder.localPosition = new Vector3(0, newY, 0);
 
+        if(_interactAction.WasPressedThisFrame())
+        {
+            GrabObject();
+        }
+
     }
 
     void Movement()
@@ -140,11 +157,41 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /*
-    IEnumerator SmoothCrouch()
+    private void GrabObject()
     {
-        while(Mathf.Abs(_cameraStandY - _cameraCrouchY) != 0) {}
-        yield return null;
+        if(_grabbedObject == null)
+        {
+            Collider[] objectsToGrab = Physics.OverlapBox(_grabSensor.position, _grabSensorSize);
+
+            foreach(Collider item in objectsToGrab)
+            {
+                IGrabeable grabeable = item.GetComponent<IGrabeable>();
+
+                if(grabeable != null)
+                {
+                    _grabbedObject = item.transform;
+                    _grabbedObject.SetParent(_hands);
+                    _grabbedObject.position = _hands.position;
+                    _grabbedObject.rotation = _hands.rotation;
+                    _grabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+                }
+            }
+        }
+
+        else
+        {
+            _grabbedObject.SetParent(null);
+            _grabbedObject.GetComponent<Rigidbody>().isKinematic = false;
+            _grabbedObject = null;
+        }
     }
-    */
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(_hands.position, _handsSize);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(_grabSensor.position, _grabSensorSize);
+    }
 }
