@@ -21,5 +21,16 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    
+    public void Open()
+    {
+        Debug.Log("Abierto");
+        PlayerController _playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        _playerScript.GrabObject();
+        Destroy(_playerScript.key);
+    }
+
+    public void DestroyToys()
+    {
+        
+    }
 }

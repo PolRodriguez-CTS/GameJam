@@ -61,8 +61,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _hands;
     [SerializeField] private Vector3 _handsSize;
     //Transfomr del objeto grabeado
-    private Transform _grabbedObject;
+    public Transform _grabbedObject;
     //private float _throwForce = 2;
+
+    [SerializeField] public GameObject key;
 
 
     void Awake()
@@ -162,7 +164,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void GrabObject()
+    public void GrabObject()
     {
         if(_grabbedObject == null)
         {
