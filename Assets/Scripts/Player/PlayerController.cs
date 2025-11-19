@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector3 _handsSize;
     //Transfomr del objeto grabeado
     private Transform _grabbedObject;
+    //private float _throwForce = 2;
 
 
     void Awake()
@@ -114,6 +115,10 @@ public class PlayerController : MonoBehaviour
         {
             GrabObject();
         }
+        /*if(_interactAction.WasPerformedThisFrame() && _grabbedObject != null)
+        {
+            Throw();
+        }*/
 
     }
 
@@ -185,6 +190,21 @@ public class PlayerController : MonoBehaviour
             _grabbedObject = null;
         }
     }
+
+    /*void Throw()
+    {
+        if (_grabbedObject == null)
+        {
+            return;
+        }
+
+        Rigidbody _grabbedBody = _grabbedObject.GetComponent<Rigidbody>();
+
+        _grabbedObject.SetParent(null);
+        _grabbedBody.isKinematic = false;
+        _grabbedBody.AddForce(_mainCamera.transform.forward * _throwForce, ForceMode.Impulse);
+        _grabbedObject = null;
+    }*/
 
     void OnDrawGizmos()
     {

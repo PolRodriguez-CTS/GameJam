@@ -9,7 +9,7 @@ public class ColorEmission : MonoBehaviour
 
     public bool rangeEmission = false;
     public float numberEmission = 0f;
-    public float speed = 1f;
+    public float speed;
 
 
     void Awake()
@@ -40,13 +40,20 @@ public class ColorEmission : MonoBehaviour
         materials.SetColor("_EmissionColor", Color.white * numberEmission);
     }
 
-//No funciona no sé porque, he probado a hacer que las dos cosas (tanto el cubo de emision y el emissionTrigger sean triggers pero no va), tampoco va con onTriggerStay
-    void OnTriggerStay(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        //En la escena, dentro del player hay un sphere collider con la tag de EmissionTrigger, esto activa la condición que a su misma vez cambia la booleana a true
-        if(other.gameObject.tag == "EmissionTrigger")
+        if(other.gameObject.layer == 3)
         {
+            speed = 1.5f;
             rangeEmission = true;
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.layer == 3)
+        {
+            speed = 2.5f;
+            rangeEmission = false;
         }
     }
 }

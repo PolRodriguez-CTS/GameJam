@@ -6,4 +6,9 @@ public class Box : MonoBehaviour, IGrabeable
     {
         Debug.Log("Grab");
     }
+
+    public void Drop()
+    {
+        Debug.Log("Drop");
+    }
 }
