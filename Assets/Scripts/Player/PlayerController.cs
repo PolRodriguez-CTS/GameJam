@@ -121,7 +121,10 @@ public class PlayerController : MonoBehaviour
         }
 
         if(_interactAction.WasPressedThisFrame())
-        {}
+        {
+            Debug.Log("Interact");
+            Interact();
+        }
     }
 
     void Movement()
@@ -173,9 +176,11 @@ public class PlayerController : MonoBehaviour
             foreach(Collider item in objectsToGrab)
             {
                 IGrabeable grabeable = item.GetComponent<IGrabeable>();
+                ColorEmission _emissionScript = item.GetComponent<ColorEmission>();
 
                 if(grabeable != null)
                 {
+                    _emissionScript.isColored = true;
                     grabeable.Grab();
                     _grabbedObject = item.transform;
                     _grabbedObject.SetParent(_hands);
@@ -188,6 +193,9 @@ public class PlayerController : MonoBehaviour
 
         else
         {
+            ColorEmission _emissionScript = _grabbedObject.gameObject.GetComponent<ColorEmission>();
+            _emissionScript.isColored = false;
+
             IGrabeable grabeable = _grabbedObject.gameObject.GetComponent<IGrabeable>();
             grabeable.Drop();
             _grabbedObject.SetParent(null);
@@ -202,11 +210,13 @@ public class PlayerController : MonoBehaviour
 
         foreach(Collider item in objectsToInteract)
         {
-            //Iinteractables interactable = item.GetComponent<Iinteractable>();
-            //if(interactable != null)
-            /*{
-                interactable.Instace();
-            }*/
+            IInteractable interactable = item.GetComponent<IInteractable>();
+            ColorEmission _emissionScript = item.GetComponent<ColorEmission>();
+
+            if(interactable != null)
+            {
+                interactable.Interact();
+            }
         }
     }
 

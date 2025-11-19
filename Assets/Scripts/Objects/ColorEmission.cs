@@ -9,6 +9,7 @@ public class ColorEmission : MonoBehaviour
 
     public bool rangeEmission = false;
     public float numberEmission = 0f;
+    public bool isColored = false;
     public float speed;
 
 
@@ -42,7 +43,7 @@ public class ColorEmission : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.layer == 3)
+        if(other.gameObject.layer == 3 && !isColored)
         {
             speed = 1.5f;
             rangeEmission = true;
@@ -50,7 +51,7 @@ public class ColorEmission : MonoBehaviour
     }
     void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.layer == 3)
+        if(other.gameObject.layer == 3 || !isColored)
         {
             speed = 2.5f;
             rangeEmission = false;
