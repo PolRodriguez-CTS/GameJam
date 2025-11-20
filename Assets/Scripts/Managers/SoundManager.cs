@@ -16,6 +16,8 @@ public class SoundManager : MonoBehaviour
     public AudioClip _dropObjectSFX;
     public AudioClip _lockSFX;
     public AudioClip _canvasNoteSFX;
+    public AudioClip _pelotaSFX;
+    public AudioClip _cajaJuguetesSFX;
 
     void Awake()
     {
@@ -35,24 +37,22 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(_stepsAudioSource);
     }
 
-    void Start()
+    public void PlayBGM(AudioClip clip)
     {
-        
-    }
+        if (clip == null) return;
 
-    public void PlayBGM(AudioClip _clip)
-    {
-        if(_bgmAudioSource.clip == _clip && _bgmAudioSource.isPlaying)
-        {
+        // Si ya está sonando esta música, no la reinicies
+        if (_bgmAudioSource.clip == clip && _bgmAudioSource.isPlaying)
             return;
-        }
-        
+
+        _bgmAudioSource.clip = clip;
+        _bgmAudioSource.loop = true;
         _bgmAudioSource.Play();
     }
 
-    public void PlaySFX(AudioClip _clip)
+    public void PlaySFX(AudioClip clip)
     {
-        _sfxAudioSource.PlayOneShot(_clip);
+        _sfxAudioSource.PlayOneShot(clip);
     }
 
     public void StepSFX(AudioClip _clip)

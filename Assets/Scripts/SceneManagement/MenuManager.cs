@@ -43,5 +43,13 @@ public class MenuManager : MonoBehaviour
             Debug.Log("Escena1");
             SoundManager.Instance.PlayBGM(SoundManager.Instance._bgmClip);
         }
+
+        //Añadir escena de nivel
+        /*
+        if(sceneName == Nivel)
+        {
+            SoundManager.Instance.PlayBGM(SoundManager.Instance._bgmClip);
+        }
+        */
     }
 }
